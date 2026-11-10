@@ -1,6 +1,15 @@
 let channelslist = document.querySelector("#channels-list")
-
 let player = document.querySelector("#player")
+
+function displaychannel(channel)
+{
+    player.innerHTML = `
+        <h2>${channel.name}</h2>
+        <img src ="${channel.previewImage}">
+        <p>${channel.category}</p>
+        <p>${channel.epg.currentProgram}</p>
+    `
+}
 
 fetch("./data.json")
 .then(function(response){
@@ -22,15 +31,7 @@ fetch("./data.json")
             let selectedchannel = channels.find(function(channel){
                 return button.textContent.startsWith(channel.channelNumber)
             })
-            console.log(selectedchannel)
-            console.log(Object.keys(selectedchannel))
-            console.log(selectedchannel.epg)
-
-            player.textContent = selectedchannel.name
-
-            player.innerHTML += `<img src="${selectedchannel.previewImage}">`
-            player.innerHTML += `<p>${selectedchannel.category}</p>`
-            player.innerHTML += `<p>${selectedchannel.epg.currentProgram}</p>`
+            displaychannel(selectedchannel)
         })
     })
 
@@ -50,7 +51,17 @@ fetch("./data.json")
             channelslist.innerHTML += `<button class="channel-button">${channelsp.channelNumber} - ${channelsp.name}</button>`
         }
 
-        let sportbutton = document.querySelector(".channel-button")
+        let sportbutton = document.querySelectorAll(".channel-button")
+
+        sportbutton.forEach(function(button){
+            button.addEventListener("click", function(){
+                let selectedchannel = channels.find(function(channel){
+                    
+                    return button.textContent.startsWith(channel.channelNumber)
+                })
+                displaychannel(selectedchannel)
+            })
+        })
     })
 })
 
