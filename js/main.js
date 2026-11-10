@@ -12,11 +12,6 @@ fetch("./data.json")
         channelslist.innerHTML += `<button class="channel-button">${channel.channelNumber}
          - ${channel.name}</button>`
     }
-    let sportchannels = channels.filter(function(channel){
-        return channel.category === "SPORT"
-    })
-    console.log(sportchannels)
-
     let allchannelBtn = document.querySelectorAll(".channel-button")
 
     allchannelBtn.forEach(function(button){
@@ -34,9 +29,28 @@ fetch("./data.json")
             player.textContent = selectedchannel.name
 
             player.innerHTML += `<img src="${selectedchannel.previewImage}">`
-            player.innerHTML += `<p>${selectedchannel.category}"</p>`
+            player.innerHTML += `<p>${selectedchannel.category}</p>`
             player.innerHTML += `<p>${selectedchannel.epg.currentProgram}</p>`
         })
+    })
+
+    let sportchannels = channels.filter(function(channel){
+        return channel.category === "SPORT"
+    })
+    console.log(sportchannels)
+
+    let sport = document.querySelector("#sport")
+
+    sport.addEventListener("click", function()
+    {
+        channelslist.innerHTML = ""
+
+        for (let channelsp of sportchannels)
+        {
+            channelslist.innerHTML += `<button class="channel-button">${channelsp.channelNumber} - ${channelsp.name}</button>`
+        }
+
+        let sportbutton = document.querySelector(".channel-button")
     })
 })
 
@@ -45,14 +59,8 @@ let sidebartrigger = document.querySelector("#sidebar-trigger")
 let categorysidebar = document.querySelector("#category-sidebar")
 let sidebarclose = document.querySelector("#close-sidebar")
 let allchannels = document.querySelector("#all-chanels")
-let sport = document.querySelector("#sport")
 let news = document.querySelector("#news")
 let entertainment = document.querySelector("#entertainment")
-
-sport.addEventListener("click", function()
-{
-    console.log("sport clicked")
-})
 
 news.addEventListener("click", function()
 {
