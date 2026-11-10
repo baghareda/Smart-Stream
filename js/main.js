@@ -1,7 +1,9 @@
 let channelslist = document.querySelector("#channels-list")
 
+let player = document.querySelector("#player")
+
 fetch("./data.json")
-.then(function(response) {
+.then(function(response){
     return response.json()
 })
 .then(function(channels){
@@ -13,7 +15,19 @@ fetch("./data.json")
     let allchannelBtn = document.querySelectorAll(".channel-button")
 
     allchannelBtn.forEach(function(button){
-        
+        button.addEventListener("click", function(){
+
+            console.log("channel licked")
+
+            let selectedchannel = channels.find(function(channel){
+                return button.textContent.startsWith(channel.channelNumber)
+            })
+            console.log(selectedchannel)
+
+            player.innerHTML = ""
+            player.textContent = selectedchannel.name
+            player.innerHTML += `<img src="${selectedchannel.previewImage}">`
+        })
     })
 })
 
