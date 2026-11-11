@@ -16,52 +16,64 @@ fetch("./data.json")
     return response.json()
 })
 .then(function(channels){
-    for (let channel of channels)
-    {
-        channelslist.innerHTML += `<button class="channel-button">${channel.channelNumber}
-         - ${channel.name}</button>`
-    }
-    let allchannelBtn = document.querySelectorAll(".channel-button")
 
-    allchannelBtn.forEach(function(button){
+    function displaychannels(channellist){
+
+        channelslist.innerHTML = ""
+        for (let channel of channellist)
+        {
+            channelslist.innerHTML += `<button class="channel-button">${channel.channelNumber}
+            - ${channel.name}</button>`
+        }
+        let allchannelBtn = document.querySelectorAll(".channel-button")
+
+        allchannelBtn.forEach(function(button){
         button.addEventListener("click", function(){
 
             console.log("channel licked")
 
-            let selectedchannel = channels.find(function(channel){
+            let selectedchannel = channellist.find(function(channel){
                 return button.textContent.startsWith(channel.channelNumber)
             })
             displaychannel(selectedchannel)
         })
     })
+    }
+     displaychannels(channels)
 
     let sportchannels = channels.filter(function(channel){
         return channel.category === "SPORT"
     })
-    console.log(sportchannels)
+
+    let newschannels = channels.filter(function(channel){
+        return channel.category === "NEWS"
+    })
+
+    let musicchannels = channels.filter(function(channel){
+        return channel.category === "MUSIQUE"
+    })
 
     let sport = document.querySelector("#sport")
-
     sport.addEventListener("click", function()
     {
-        channelslist.innerHTML = ""
+        displaychannels(sportchannels)
+    })
 
-        for (let channelsp of sportchannels)
-        {
-            channelslist.innerHTML += `<button class="channel-button">${channelsp.channelNumber} - ${channelsp.name}</button>`
-        }
+    let news = document.querySelector("#news")
+    news.addEventListener("click", function()
+    {
+        displaychannels(newschannels)
+    })
 
-        let sportbutton = document.querySelectorAll(".channel-button")
+    let music = document.querySelector("#music")
+    music.addEventListener("click", function()
+    {
+        displaychannels(musicchannels)
+    })
 
-        sportbutton.forEach(function(button){
-            button.addEventListener("click", function(){
-                let selectedchannel = channels.find(function(channel){
-                    
-                    return button.textContent.startsWith(channel.channelNumber)
-                })
-                displaychannel(selectedchannel)
-            })
-        })
+    let allchannels = document.querySelector("#all-chanels")
+    allchannels.addEventListener("click", function(){
+        displaychannels(channels)
     })
 })
 
@@ -69,19 +81,6 @@ fetch("./data.json")
 let sidebartrigger = document.querySelector("#sidebar-trigger")
 let categorysidebar = document.querySelector("#category-sidebar")
 let sidebarclose = document.querySelector("#close-sidebar")
-let allchannels = document.querySelector("#all-chanels")
-let news = document.querySelector("#news")
-let entertainment = document.querySelector("#entertainment")
-
-news.addEventListener("click", function()
-{
-    console.log("news clicked")
-})
-
-entertainment.addEventListener("click", function()
-{
-    console.log("entertainment cliked")
-})
 
 sidebartrigger.addEventListener("mouseenter", function()
 {
