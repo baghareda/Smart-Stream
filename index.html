@@ -10,6 +10,10 @@
 <body class="bg-gray-900">
     <header>
         <div class="logo text-2xl text-[#4cc9f0] p-4 font-sans">📺 SMART STREAM</div>
+
+            <input id="search-bar" type="text" placeholder="Enter the channel you want to search for"
+             class="search-bar text-xl text-gray-600 rounded-lg bg-white w-[1400px] p-4 ml-6 font-mono">
+
     </header>
     <div id="sidebar-trigger" class="fixed left-0 h-screen w-3 z-40 top-0 bg-[#f72585]"></div>
     <div id="category-sidebar" class= "fixed left-0 h-screen w-64 bg-gray-800 z-50 
@@ -32,11 +36,11 @@
     <div id="channels-section" class="channels-section text-[#4cc9f0] bg-gray-800 rounded-xl min-h-[650px]">
 
         <h2 class="text-xl font-bold mb-6 p-6">TV Channels :</h2>
-        <div id="channels-list"></div>
+        <div id="channels-list" class="h-[550px] overflow-y-auto rounded-lg"></div>
 
     </div>
 
-        <div id="player-section" class="bg-gray-800 rounded-xl min-h-[650px] text-[#4cc9f0]">
+        <div id="player-section" class="bg-gray-800 rounded-xl min-h-[650px] text-[#4cc9f0] text-xl font-bold mb-6 p-6">
             <h2 class="text-xl font-bold mb-6 p-6"> Now Playing :</h2>
             <div id="player"></div>
         </div>

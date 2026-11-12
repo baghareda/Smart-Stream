@@ -11,7 +11,9 @@ function displaychannel(channel)
     `
 }
 
-fetch("./data.json")
+const furl = "https://api.npoint.io/b623f45eec11093d64aa"
+
+fetch(furl)
 .then(function(response){
     return response.json()
 })
@@ -22,7 +24,8 @@ fetch("./data.json")
         channelslist.innerHTML = ""
         for (let channel of channellist)
         {
-            channelslist.innerHTML += `<button class="channel-button">${channel.channelNumber}
+            channelslist.innerHTML += `<button class="channel-button bg-gray-700 hover:bg-gray-600 p-4 mb-4
+            rounded-lg cursor-pointer w-full text-left">${channel.channelNumber}
             - ${channel.name}</button>`
         }
         let allchannelBtn = document.querySelectorAll(".channel-button")
@@ -35,6 +38,11 @@ fetch("./data.json")
             let selectedchannel = channellist.find(function(channel){
                 return button.textContent.startsWith(channel.channelNumber)
             })
+
+            allchannelBtn.forEach(function(btn){
+                btn.style.backgroundColor = ""
+            })
+            button.style.backgroundColor = "#f72585"
             displaychannel(selectedchannel)
         })
     })
@@ -57,23 +65,44 @@ fetch("./data.json")
     sport.addEventListener("click", function()
     {
         displaychannels(sportchannels)
+        categorysidebar.classList.add("-translate-x-full")
+        currentchannel = sportchannels
     })
 
     let news = document.querySelector("#news")
     news.addEventListener("click", function()
     {
         displaychannels(newschannels)
+        categorysidebar.classList.add("-translate-x-full")
+        currentchannel = newschannels
     })
 
     let music = document.querySelector("#music")
     music.addEventListener("click", function()
     {
         displaychannels(musicchannels)
+        categorysidebar.classList.add("-translate-x-full")
+        currentchannel = musicchannels
     })
 
     let allchannels = document.querySelector("#all-chanels")
     allchannels.addEventListener("click", function(){
         displaychannels(channels)
+        categorysidebar.classList.add("-translate-x-full")
+    })
+
+    let searchbar = document.querySelector("#search-bar")
+    let currentchannel = channels
+
+    searchbar.addEventListener("input", function(){
+        let searchvalue = searchbar.value
+            searchvalue = searchvalue.toLowerCase().trim()
+
+        let filtredchannels = currentchannel.filter(function(channel){
+            return channel.channelNumber.toString().includes(searchvalue) ||
+                channel.name.toLowerCase().includes(searchvalue)
+        })
+        displaychannels(filtredchannels)
     })
 })
 
