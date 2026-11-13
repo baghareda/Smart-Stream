@@ -1,14 +1,22 @@
 let channelslist = document.querySelector("#channels-list")
 let player = document.querySelector("#player")
+let loadingspiner = document.querySelector("#loading-spiner")
 
-function displaychannel(channel)
+async function displaychannel(channel)
 {
+    loadingspiner.classList.remove("hidden")
     player.innerHTML = `
         <h2>${channel.name}</h2>
         <img src ="${channel.previewImage}">
         <p>${channel.category}</p>
         <p>${channel.epg.currentProgram}</p>
     `
+    let spinerimg = player.querySelector("img")
+    await new Promise(function(resolve){
+        spinerimg.addEventListener("load", resolve)
+    })
+    await new Promise(resolve => setTimeout(resolve, 4000))
+    loadingspiner.classList.add("hidden")
 }
 
 const furl = "https://api.npoint.io/b623f45eec11093d64aa"
